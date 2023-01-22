@@ -1,5 +1,7 @@
 #include <iostream>
 #include <iomanip>
+#include <limits>
+using namespace std;
 
 void showbalance(double balance);
 double deposit(); //儲存
@@ -14,11 +16,17 @@ int main() {
     std::cout<<"2.Deposit\n";
     std::cout<<"3.Withdraw\n";
     std::cout<<"4.Exit\n";
-    std::cin>>choice;
-
-    std::cin.clear();
-    fflush(stdin);
     
+  
+    if( !(std::cin >> choice))//如果取值失敗
+    {
+        cin.clear();
+        //fflush(stdin);
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');//忽略掉buffer的最大長度
+        //choice = 5;
+    }
+    std::cout << "choice " << choice << "\r\n";
+
     switch(choice){
       case 1:
         showbalance(balance);
@@ -35,7 +43,9 @@ int main() {
         std::cout<<"Thanks for visiting!\n";
         break;
       default:
-        std::cout<<"Invalid choice.\n"; }
+        std::cout<<"Invalid choice.\n"; 
+        break;}
+    
   }while(choice!=4);
 
   return 0;
